@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-// import FeaturesSection from "@/components/FeaturesSection";
+import FeaturesSection from "@/components/FeaturesSection";
 // import ToolsSection from "@/components/ToolsSection";
 // import TestimonialsSection from "@/components/TestimonialsSection";
 // import PricingSection from "@/components/PricingSection";
@@ -12,8 +12,8 @@ export default function Home() {
     <main className="flex flex-col">
       <Navbar />                    {/* ✅ add this */}
       <HeroSection />
-      {/* <FeaturesSection />
-      <ToolsSection />
+      <FeaturesSection />
+      {/* <ToolsSection />
       <TestimonialsSection />
       <PricingSection />
       <FAQSection />
