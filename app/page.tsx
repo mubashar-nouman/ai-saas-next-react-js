@@ -4,8 +4,8 @@ import FeaturesSection from "@/components/FeaturesSection";
 // import ToolsSection from "@/components/ToolsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
-// import FAQSection from "@/components/FAQSection";
-// import Footer from "@/components/Footer";
+import FAQSection from "@/components/FAQSection";
+import Footer from "@/components/FooterSection";
 
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
       {/* <ToolsSection /> */}
       <PricingSection />
       <TestimonialsSection />
-      {/* <FAQSection /> */}
-      {/* <Footer /> */}
+      <FAQSection />
+      <Footer />
     </main>
   );
 }
