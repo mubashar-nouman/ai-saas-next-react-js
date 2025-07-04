@@ -98,17 +98,17 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 items-center">
 
           {/* Left Content */}
-          <div className={`space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`space-y-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
 
             {/* Badge */}
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-full">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 text-blue-700 px-2 py-1 rounded-full">
               <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">All-in-One Digital Tools</span>
+              <span className="text-[10px] font-medium">All-in-One Digital Tools</span>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-tight">
+              <h1 className="text-2xl lg:text-[40px] font-bold tracking-tight text-gray-900 leading-tight">
                 Create AI Content or Convert <br />{' '}
                 <span className="relative">
                   <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
