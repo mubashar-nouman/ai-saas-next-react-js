@@ -44,7 +44,7 @@ export default function Login() {
                         <div className="h-6 w-6 bg-white rounded-sm"></div>
                     </div>
                     <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-                        Welcome back to MSToolify
+                        Welcome back to SMToolify
                     </h1>
                     <p className="text-gray-600">Please sign in to your account</p>
                 </div>

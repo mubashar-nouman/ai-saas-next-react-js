@@ -45,7 +45,7 @@ export default function Signup() {
                         <div className="h-6 w-6 bg-white rounded-sm"></div>
                     </div>
                     <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-                        Create your MSToolify account
+                        Create your SMToolify account
                     </h1>
                     <p className="text-gray-600">Start using AI tools with your new account</p>
                 </div>
