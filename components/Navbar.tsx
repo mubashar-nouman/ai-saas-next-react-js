@@ -45,7 +45,7 @@ export default function Navbar() {
           <NavigationMenuList className="flex items-center space-x-1">
             {[
               { href: "/", label: "Home" },
-              { href: "/pricing", label: "Pricing" },
+              { href: "/profile", label: "Pricing" },
               { href: "/templates", label: "Templates" },
               { href: "/resources", label: "Resources" },
             ].map(({ href, label }) => (

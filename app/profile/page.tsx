@@ -1,9 +1,13 @@
-import React from 'react'
+"use client";
+import React from 'react';
 
-const profilePage = () => {
+const ProfilePage = () => {
   return (
-    <div>profilePage</div>
-  )
-}
+    <>
+      <div>Profile Page</div>
+      <div>Hello</div>
+    </>
+  );
+};
 
-export default profilePage
+export default ProfilePage;

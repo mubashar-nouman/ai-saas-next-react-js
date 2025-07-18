@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuthStore } from "@/stores/authStore";
+import router from "next/router";
 
 // ✅ Zod Schema
 const loginSchema = z.object({
@@ -21,6 +23,7 @@ type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const { login, user, error } = useAuthStore();
 
     const {
         register,
@@ -29,10 +32,29 @@ export default function Login() {
     } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
     });
+    // useEffect(() => {
+    //     // Check if user is already logged in
+    //     const token = localStorage.getItem("token");
+    //     if (token) {
+    //         // window.location.href = "/profile"; // or "/profile"
+    //     }
+    // }, []);
 
     const onSubmit = async (data: LoginSchema) => {
-        console.log("Submitted Data:", data);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        try {
+            await login(data.email, data.password);
+    
+            // Redirect after login based on role
+            const loggedInUser = useAuthStore.getState().user;
+            console.log("Logged in user:", loggedInUser?.role);
+            if (loggedInUser?.role === 'admin') {
+                window.location.href = "/admin";
+            } else if (loggedInUser) {
+                window.location.href = "/profile";
+            }
+        } catch (err) {
+            console.error("Login failed", err);
+        }
     };
 
     return (
