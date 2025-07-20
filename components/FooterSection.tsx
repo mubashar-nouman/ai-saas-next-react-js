@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
@@ -35,7 +36,7 @@ export default function Footer() {
 
           {/* Brand & Contact */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-gray-900">MS Toolify</h3>
+            <h3 className="text-2xl font-bold text-gray-900">SM Toolify</h3>
             <p className="text-sm text-gray-600">
               Building exceptional digital experiences with modern technology and creative design.
             </p>
@@ -125,7 +126,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
-          <span className="text-gray-500">© {currentYear} MS Toolify. All rights reserved.</span>
+          <span className="text-gray-500">© {currentYear} SM Toolify. All rights reserved.</span>
           <div className="flex space-x-4">
             <a href="#" className="text-gray-500 hover:text-blue-600 transition">Privacy Policy</a>
             <a href="#" className="text-gray-500 hover:text-blue-600 transition">Terms of Service</a>
