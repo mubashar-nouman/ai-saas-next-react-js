@@ -6,8 +6,15 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = req.cookies.get('token')?.value;
 
-  // Public routes that don't require authentication
-  const publicRoutes = ['/', '/login', '/signup'];
+  let publicRoutes: string[] = [];
+
+  // Public routes that don't require authentication - If token, then I allowed only root path to be accessible
+  if(token){
+    publicRoutes = ['/'];
+  }
+  else{
+    publicRoutes = ['/login', '/signup', '/'];
+  }
   
   // Check if current path is a public route
   if (publicRoutes.includes(pathname)) {

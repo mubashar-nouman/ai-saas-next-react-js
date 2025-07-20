@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 // ✅ Zod Schema
 const loginSchema = z.object({
@@ -24,33 +24,35 @@ type LoginSchema = z.infer<typeof loginSchema>;
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const { login, user, error } = useAuthStore();
+    const router = useRouter();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<LoginSchema>({
+    // Redirect if user is already logged in
+    useEffect(() => {
+        if (user) {
+            if (user.role === 'admin') {
+                router.push('/admin');
+            } else if (user.role === 'user') {
+                router.push('/dashboard');
+            }
+        }
+    }, [user, router]);
+
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
     });
-    // useEffect(() => {
-    //     // Check if user is already logged in
-    //     const token = localStorage.getItem("token");
-    //     if (token) {
-    //         // window.location.href = "/profile"; // or "/profile"
-    //     }
-    // }, []);
 
     const onSubmit = async (data: LoginSchema) => {
         try {
-            await login(data.email, data.password);
-    
-            // Redirect after login based on role
-            const loggedInUser = useAuthStore.getState().user;
-            console.log("Logged in user:", loggedInUser?.role);
+            const loggedInUser = await login(data.email, data.password);
+            
+            // Redirect after login based on role using returned user data
             if (loggedInUser?.role === 'admin') {
                 window.location.href = "/admin";
-            } else if (loggedInUser) {
-                window.location.href = "/profile";
+            } else if (loggedInUser?.role === 'user') {
+                window.location.href = "/dashboard";
+            } else {
+                // Invalid role or login failed, stay on login page
+                console.error("Invalid user role or login failed:", loggedInUser?.role);
             }
         } catch (err) {
             console.error("Login failed", err);

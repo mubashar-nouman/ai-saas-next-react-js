@@ -15,10 +15,10 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
-  register: (name: string, email: string, password: string) => Promise<void>;
-  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<User | null>;
+  login: (email: string, password: string) => Promise<User | null>;
   logout: () => Promise<void>;
-  fetchUser: () => Promise<void>;
+  getCurrentUser: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -34,12 +34,15 @@ export const useAuthStore = create<AuthState>((set) => ({
         { name, email, password },
         { withCredentials: true }
       );
-      set({ user: res.data, loading: false });
+      const userData = res.data;
+      set({ user: userData, loading: false });
+      return userData;
     } catch (err: any) {
       set({
         error: err?.response?.data?.message || 'Registration failed',
         loading: false,
       });
+      return null;
     }
   },
 
@@ -51,12 +54,15 @@ export const useAuthStore = create<AuthState>((set) => ({
         { email, password },
         { withCredentials: true }
       );
-      set({ user: res.data, loading: false });
+      const userData = res.data;
+      set({ user: userData, loading: false });
+      return userData;
     } catch (err: any) {
       set({
         error: err?.response?.data?.message || 'Login failed',
         loading: false,
       });
+      return null;
     }
   },
 
@@ -69,15 +75,18 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  fetchUser: async () => {
-    set({ loading: true });
+  getCurrentUser: async () => {
+    set({ loading: true, error: null });
     try {
-      const res = await axios.get(`${API}/api/auth/me`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API}/api/auth/me`, { withCredentials: true });
       set({ user: res.data, loading: false });
-    } catch (err) {
-      set({ user: null, loading: false });
+    } catch (err: any) {
+      set({
+        user: null,
+        error: err?.response?.data?.message || 'Failed to get current user',
+        loading: false,
+      });
     }
-  },
+  }
+
 }));

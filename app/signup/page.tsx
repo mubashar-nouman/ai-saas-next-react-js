@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -24,9 +24,21 @@ type SignupSchema = z.infer<typeof signupSchema>;
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const signup = useAuthStore((state) => state.register);
+  const user = useAuthStore((state) => state.user);
   const error = useAuthStore((state) => state.error);
   const loading = useAuthStore((state) => state.loading);
   const router = useRouter();
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      if (user.role === 'admin') {
+        router.push('/admin');
+      } else if (user.role === 'user') {
+        router.push('/dashboard');
+      }
+    }
+  }, [user, router]);
 
   const {
     register,
@@ -37,11 +49,16 @@ export default function Signup() {
   });
 
   const onSubmit = async (data: SignupSchema) => {
-    await signup(data.name, data.email, data.password);
-    // Get updated user from Zustand
-    const currentUser = useAuthStore.getState().user;
-    if (currentUser) {
-      router.push("/profile");
+    const currentUser = await signup(data.name, data.email, data.password);
+    
+    // Redirect after signup based on role using returned user data
+    if (currentUser?.role === 'admin') {
+      router.push("/admin");
+    } else if (currentUser?.role === 'user') {
+      router.push("/dashboard");
+    } else {
+      // Invalid role or signup failed, stay on signup page
+      console.error("Invalid user role or signup failed:", currentUser?.role);
     }
   };
 
