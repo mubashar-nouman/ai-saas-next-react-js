@@ -28,7 +28,7 @@ export default function Sidebar() {
 
     const menuItems = [
         { href: "/dashboard", icon: Home, label: "Dashboard" },
-        { href: "/dashboard/ai-tools", icon: Wand2, label: "AI Tools" },
+        { href: "/dashboard/ai-tools/", icon: Wand2, label: "AI Tools" },
         { href: "/dashboard/downloaders", icon: Download, label: "Downloaders" },
         { href: "/dashboard/conversions", icon: FileText, label: "File Conversions" },
         { href: "/dashboard/billing", icon: CreditCard, label: "Billing" },
@@ -86,7 +86,7 @@ export default function Sidebar() {
                 <nav className="flex-1 px-4 py-4">
                     <div className="space-y-2">
                         {menuItems.map((item) => {
-                            const isActive = pathname === item.href;
+                            const isActive = pathname.startsWith(item.href);
                             return (
                                 <Link
                                     key={item.href}
