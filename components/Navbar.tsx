@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 
 export default function Navbar() {

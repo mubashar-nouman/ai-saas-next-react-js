@@ -7,7 +7,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
 
 const FaqSection = () => {
   const faqs = [
