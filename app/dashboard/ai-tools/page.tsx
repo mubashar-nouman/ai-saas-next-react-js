@@ -77,7 +77,7 @@ const tools = [
   {
     name: 'Instagram Caption Generator',
     description: 'Write engaging Instagram captions to increase post reach, engagement, and audience interaction.',
-    slug: 'instagram-caption-generator',
+    slug: 'instagram-captions',
     icon: Instagram,
     gradient: 'from-pink-500 to-fuchsia-600',
   },

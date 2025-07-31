@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Play, CheckCircle, Sparkles, Zap, Users, Star, TrendingUp, FileText, Download, Video, Music, Image, FileVideo, Instagram, Youtube, File } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, Sparkles, Zap, Users, Star, TrendingUp, FileText, Download, Video, Music, FileVideo, Instagram, Youtube, File } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -75,12 +75,6 @@ const HeroSection = () => {
     return () => clearInterval(tabInterval);
   }, []);
 
-  const stats = [
-    { icon: Users, value: '50K+', label: 'Happy Users' },
-    { icon: TrendingUp, value: '5M+', label: 'Files Processed' },
-    { icon: Star, value: '4.9', label: 'User Rating' },
-    { icon: Zap, value: '24/7', label: 'Available' }
-  ];
 
   return (
     <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50 overflow-hidden">

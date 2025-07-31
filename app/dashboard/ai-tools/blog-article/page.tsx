@@ -1,24 +1,33 @@
 "use client";
 
 import React from 'react';
-import { useInstagramCaptionsStore } from '@/stores/writerStore';
+import { useBlogArticleStore } from '@/stores/writerStore';
 import { useRouter } from 'next/navigation';
-import { Copy, ArrowLeft, Instagram, Sparkles, Hash } from 'lucide-react';
+import { Copy, ArrowLeft, Edit3, Sparkles, Hash, Tags, Volume2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
-const InstagramCaptionsPage: React.FC = () => {
+const BlogArticleGeneratorPage: React.FC = () => {
     const router = useRouter();
     const {
         topic,
-        number,
+        keywords,
+        tone,
         result,
         loading,
         error,
         setTopic,
-        setNumber,
-        generateCaptions,
+        setKeywords,
+        setTone,
+        generateArticle,
         reset,
-    } = useInstagramCaptionsStore();
+    } = useBlogArticleStore();
 
     const handleCopy = () => {
         navigator.clipboard.writeText(result);
@@ -43,12 +52,12 @@ const InstagramCaptionsPage: React.FC = () => {
                             </button>
                             
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg">
-                                    <Instagram className="w-5 h-5 text-white" />
+                                <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
+                                    <Edit3 className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <p className="text-lg font-bold text-gray-800">Instagram Captions Generator</p>
-                                    <p className="text-sm text-gray-500">AI-powered caption creation</p>
+                                    <p className="text-lg font-bold text-gray-800">Blog Article Generator</p>
+                                    <p className="text-sm text-gray-500">AI-powered full article creation</p>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +65,7 @@ const InstagramCaptionsPage: React.FC = () => {
                         <button
                             onClick={handleCopy}
                             disabled={!result}
-                            className="flex items-center space-x-2 text-sm px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                            className="flex items-center space-x-2 text-sm px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
                         >
                             <Copy size={16} />
                             <span>Copy</span>
@@ -71,12 +80,12 @@ const InstagramCaptionsPage: React.FC = () => {
                     {/* Input Panel */}
                     <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
                         <div className="flex items-start space-x-3 mb-6">
-                            <div className="p-2 bg-gradient-to-r from-violet-400 to-purple-500 rounded-lg">
+                            <div className="p-2 bg-gradient-to-r from-teal-500 to-emerald-600 rounded-lg">
                                 <Sparkles className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-bold text-gray-800">Instagram Captions Generator</h2>
-                                <p className="text-sm text-gray-600">Generate engaging and creative captions for your Instagram posts using AI.</p>
+                                <h2 className="text-xl font-bold text-gray-800">Blog Article Generator</h2>
+                                <p className="text-sm text-gray-600">Generate comprehensive and engaging blog articles using AI.</p>
                             </div>
                         </div>
 
@@ -90,40 +99,51 @@ const InstagramCaptionsPage: React.FC = () => {
                                     type="text"
                                     value={topic}
                                     onChange={(e) => setTopic(e.target.value)}
-                                    placeholder="e.g. Travel, Fitness, Food"
-                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all duration-200"
+                                    placeholder="e.g. The Future of AI, Sustainable Living Tips, Remote Work Best Practices"
+                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all duration-200"
                                 />
                             </div>
 
                             <div>
                                 <label className="flex items-center space-x-2 mb-3 font-semibold text-gray-700">
-                                    <span className="w-4 h-4 flex items-center justify-center bg-gradient-to-r from-blue-400 to-purple-500 rounded text-white text-xs font-bold">#</span>
-                                    <span>Number of Captions</span>
+                                    <Tags className="w-4 h-4" />
+                                    <span>Keywords</span>
                                 </label>
                                 <input
-                                    type="number"
-                                    min={1}
-                                    max={15}
-                                    value={number}
-                                    onChange={(e) => {
-                                        const val = e.target.value;
-                                        if (val === '') {
-                                            setNumber(1);
-                                        } else {
-                                            const parsed = parseInt(val);
-                                            if (!isNaN(parsed)) {
-                                                setNumber(Math.min(15, parsed));
-                                            }
-                                        }
-                                    }}
-                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all duration-200"
+                                    type="text"
+                                    value={keywords}
+                                    onChange={(e) => setKeywords(e.target.value)}
+                                    placeholder="e.g. SEO, digital marketing, content strategy, optimization"
+                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all duration-200"
                                 />
                             </div>
 
+                            <div>
+                                <label className="flex items-center space-x-2 mb-3 font-semibold text-gray-700">
+                                    <Volume2 className="w-4 h-4" />
+                                    <span>Tone</span>
+                                </label>
+                                <Select value={tone} onValueChange={setTone}>
+                                    <SelectTrigger className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all duration-200 bg-white">
+                                        <SelectValue placeholder="Select tone" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white border border-gray-200 rounded-lg shadow-lg z-50" side="bottom" align="start">
+                                        <SelectItem value="professional" className="hover:bg-gray-100">Professional</SelectItem>
+                                        <SelectItem value="casual" className="hover:bg-gray-100">Casual</SelectItem>
+                                        <SelectItem value="friendly" className="hover:bg-gray-100">Friendly</SelectItem>
+                                        <SelectItem value="formal" className="hover:bg-gray-100">Formal</SelectItem>
+                                        <SelectItem value="conversational" className="hover:bg-gray-100">Conversational</SelectItem>
+                                        <SelectItem value="authoritative" className="hover:bg-gray-100">Authoritative</SelectItem>
+                                        <SelectItem value="informative" className="hover:bg-gray-100">Informative</SelectItem>
+                                        <SelectItem value="persuasive" className="hover:bg-gray-100">Persuasive</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
                             <button
-                                onClick={generateCaptions}
+                                onClick={generateArticle}
                                 disabled={loading}
-                                className="w-full h-11 bg-violet-600 cursor-pointer hover:bg-violet-700 disabled:bg-violet-400 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                                className="w-full h-11 bg-emerald-600 cursor-pointer hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
                                 {loading ? (
                                     <>
@@ -133,7 +153,7 @@ const InstagramCaptionsPage: React.FC = () => {
                                 ) : (
                                     <>
                                         <Sparkles className="w-4 h-4" />
-                                        <span>Generate Content</span>
+                                        <span>Generate Article</span>
                                     </>
                                 )}
                             </button>
@@ -159,18 +179,18 @@ const InstagramCaptionsPage: React.FC = () => {
 
                         {result ? (
                             <div className="max-h-96 overflow-y-auto bg-gradient-to-b from-gray-50 to-white rounded-xl border border-gray-200 p-6">
-                                <div className="prose max-w-none prose-purple text-sm whitespace-pre-wrap">
+                                <div className="prose max-w-none prose-emerald text-sm whitespace-pre-wrap">
                                     <ReactMarkdown>{result}</ReactMarkdown>
                                 </div>
                             </div>
                         ) : (
                             <div className="h-96 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-center p-8">
-                                <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center mb-4">
-                                    <Instagram className="w-8 h-8 text-white" />
+                                <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mb-4">
+                                    <Edit3 className="w-8 h-8 text-white" />
                                 </div>
                                 <h3 className="text-lg font-semibold text-gray-600 mb-2">Ready to Generate</h3>
                                 <p className="text-gray-500 text-[15px]">
-                                    Output will appear here after generating captions.
+                                    Your complete blog article will appear here after generation.
                                 </p>
                             </div>
                         )}
@@ -181,4 +201,4 @@ const InstagramCaptionsPage: React.FC = () => {
     );
 };
 
-export default InstagramCaptionsPage;
+export default BlogArticleGeneratorPage;

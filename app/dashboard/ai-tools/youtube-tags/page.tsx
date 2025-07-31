@@ -1,24 +1,22 @@
 "use client";
 
 import React from 'react';
-import { useInstagramCaptionsStore } from '@/stores/writerStore';
+import { useYouTubeTagsStore } from '@/stores/writerStore';
 import { useRouter } from 'next/navigation';
-import { Copy, ArrowLeft, Instagram, Sparkles, Hash } from 'lucide-react';
+import { Copy, ArrowLeft, Youtube, Sparkles, Hash } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
-const InstagramCaptionsPage: React.FC = () => {
+const YouTubeTagsGeneratorPage: React.FC = () => {
     const router = useRouter();
     const {
         topic,
-        number,
         result,
         loading,
         error,
         setTopic,
-        setNumber,
-        generateCaptions,
+        generateTags,
         reset,
-    } = useInstagramCaptionsStore();
+    } = useYouTubeTagsStore();
 
     const handleCopy = () => {
         navigator.clipboard.writeText(result);
@@ -43,12 +41,12 @@ const InstagramCaptionsPage: React.FC = () => {
                             </button>
                             
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg">
-                                    <Instagram className="w-5 h-5 text-white" />
+                                <div className="p-2 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
+                                    <Youtube className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <p className="text-lg font-bold text-gray-800">Instagram Captions Generator</p>
-                                    <p className="text-sm text-gray-500">AI-powered caption creation</p>
+                                    <p className="text-lg font-bold text-gray-800">YouTube Tags Generator</p>
+                                    <p className="text-sm text-gray-500">AI-powered video tags creation</p>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +54,7 @@ const InstagramCaptionsPage: React.FC = () => {
                         <button
                             onClick={handleCopy}
                             disabled={!result}
-                            className="flex items-center space-x-2 text-sm px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                            className="flex items-center space-x-2 text-sm px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
                         >
                             <Copy size={16} />
                             <span>Copy</span>
@@ -71,12 +69,12 @@ const InstagramCaptionsPage: React.FC = () => {
                     {/* Input Panel */}
                     <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
                         <div className="flex items-start space-x-3 mb-6">
-                            <div className="p-2 bg-gradient-to-r from-violet-400 to-purple-500 rounded-lg">
+                            <div className="p-2 bg-gradient-to-r from-red-500 to-red-700 rounded-lg">
                                 <Sparkles className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-bold text-gray-800">Instagram Captions Generator</h2>
-                                <p className="text-sm text-gray-600">Generate engaging and creative captions for your Instagram posts using AI.</p>
+                                <h2 className="text-xl font-bold text-gray-800">YouTube Tags Generator</h2>
+                                <p className="text-sm text-gray-600">Generate relevant YouTube tags that improve video discoverability using AI.</p>
                             </div>
                         </div>
 
@@ -84,46 +82,21 @@ const InstagramCaptionsPage: React.FC = () => {
                             <div>
                                 <label className="flex items-center space-x-2 mb-3 font-semibold text-gray-700">
                                     <Hash className="w-4 h-4" />
-                                    <span>Topic</span>
+                                    <span>Video Topic</span>
                                 </label>
                                 <input
                                     type="text"
                                     value={topic}
                                     onChange={(e) => setTopic(e.target.value)}
-                                    placeholder="e.g. Travel, Fitness, Food"
-                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all duration-200"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="flex items-center space-x-2 mb-3 font-semibold text-gray-700">
-                                    <span className="w-4 h-4 flex items-center justify-center bg-gradient-to-r from-blue-400 to-purple-500 rounded text-white text-xs font-bold">#</span>
-                                    <span>Number of Captions</span>
-                                </label>
-                                <input
-                                    type="number"
-                                    min={1}
-                                    max={15}
-                                    value={number}
-                                    onChange={(e) => {
-                                        const val = e.target.value;
-                                        if (val === '') {
-                                            setNumber(1);
-                                        } else {
-                                            const parsed = parseInt(val);
-                                            if (!isNaN(parsed)) {
-                                                setNumber(Math.min(15, parsed));
-                                            }
-                                        }
-                                    }}
-                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all duration-200"
+                                    placeholder="e.g. iPhone 15 Review, Easy Pasta Recipe, Morning Workout Routine"
+                                    className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-500/10 transition-all duration-200"
                                 />
                             </div>
 
                             <button
-                                onClick={generateCaptions}
+                                onClick={generateTags}
                                 disabled={loading}
-                                className="w-full h-11 bg-violet-600 cursor-pointer hover:bg-violet-700 disabled:bg-violet-400 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                                className="w-full h-11 bg-red-600 cursor-pointer hover:bg-red-700 disabled:bg-red-400 text-white font-semibold rounded-xl transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
                                 {loading ? (
                                     <>
@@ -133,7 +106,7 @@ const InstagramCaptionsPage: React.FC = () => {
                                 ) : (
                                     <>
                                         <Sparkles className="w-4 h-4" />
-                                        <span>Generate Content</span>
+                                        <span>Generate Tags</span>
                                     </>
                                 )}
                             </button>
@@ -159,18 +132,18 @@ const InstagramCaptionsPage: React.FC = () => {
 
                         {result ? (
                             <div className="max-h-96 overflow-y-auto bg-gradient-to-b from-gray-50 to-white rounded-xl border border-gray-200 p-6">
-                                <div className="prose max-w-none prose-purple text-sm whitespace-pre-wrap">
+                                <div className="prose max-w-none prose-red text-sm whitespace-pre-wrap">
                                     <ReactMarkdown>{result}</ReactMarkdown>
                                 </div>
                             </div>
                         ) : (
                             <div className="h-96 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-center p-8">
-                                <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center mb-4">
-                                    <Instagram className="w-8 h-8 text-white" />
+                                <div className="w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center mb-4">
+                                    <Youtube className="w-8 h-8 text-white" />
                                 </div>
                                 <h3 className="text-lg font-semibold text-gray-600 mb-2">Ready to Generate</h3>
                                 <p className="text-gray-500 text-[15px]">
-                                    Output will appear here after generating captions.
+                                    Your relevant YouTube tags will appear here after generation.
                                 </p>
                             </div>
                         )}
@@ -181,4 +154,4 @@ const InstagramCaptionsPage: React.FC = () => {
     );
 };
 
-export default InstagramCaptionsPage;
+export default YouTubeTagsGeneratorPage;

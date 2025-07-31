@@ -23,7 +23,7 @@ type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const { login, user, error } = useAuthStore();
+    const { login, user } = useAuthStore();
     const router = useRouter();
 
     // Redirect if user is already logged in
