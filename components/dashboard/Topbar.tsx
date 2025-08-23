@@ -1,41 +1,40 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores/authStore";
-import { useEffect } from "react";
 
-export default function Topbar() {
-    const { user, getCurrentUser, loading } = useAuthStore();
+const Topbar = () => {
+  const { user, getCurrentUser, logout } = useAuthStore();
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        getCurrentUser();
-      }, []);
+  useEffect(() => {
+    getCurrentUser()
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [getCurrentUser]);
 
-      
+  function onSignOut() {
+    logout()
+      .then(() => (window.location.href = "/login"))
+      .catch(console.error);
+  }
+
   return (
-    <header className="bg-white border-b border-gray-100 px-6 py-[14px] flex justify-between items-center">
-      
-      {/* Left Section */}
-      <div>
-        <p className="text-xl font-medium text-gray-900">Dashboard</p>
-      </div>
-
-      {/* Right Section */}
-      <div className="flex items-center space-x-3">
-        
-        {/* User Info */}
-        <div className="flex items-center space-x-3">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="https://i.pravatar.cc/150?img=3" alt="Profile" />
-            <AvatarFallback className="text-sm font-medium bg-gray-100 text-gray-700">JD</AvatarFallback>
-          </Avatar>
-
-          <div className="hidden sm:block text-left">
-            <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-            <p className="text-xs text-gray-500">{user?.email}</p>
+    <div>
+      <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-white/10">
+        <div className="flex flex-col">
+          <p className="text-base font-semibold tracking-tight text-gray-800 dark:text-gray-100">Dashboard</p>
+        </div>
+        <div className="flex flex-row gap-3">
+          <img src={"https://i.pravatar.cc/150?img=3"} alt="avatar" className="w-8 h-8 rounded-full" />
+          <div className="flex flex-col">
+            <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{user?.name}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
           </div>
         </div>
       </div>
-    </header>
-  );
+    </div>
+  )
 }
+
+export default Topbar
