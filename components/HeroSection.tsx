@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Play, CheckCircle, Sparkles, Zap, Users, Star, TrendingUp, FileText, Download, Video, Music, FileVideo, Instagram, Youtube, File } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, Sparkles, Zap, FileText, Download, Video, Music, FileVideo, Instagram, Youtube, File } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,7 +24,7 @@ const HeroSection = () => {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [rotatingWords.length]);
 
   const features = [
     { icon: FileText, text: 'AI Content Writer' },
@@ -73,7 +73,7 @@ const HeroSection = () => {
     }, 3000);
 
     return () => clearInterval(tabInterval);
-  }, []);
+  }, [tools.length]);
 
 
   return (

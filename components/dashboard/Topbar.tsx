@@ -1,23 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
 
 const Topbar = () => {
-  const { user, getCurrentUser, logout } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+  const { user, getCurrentUser } = useAuthStore();
 
   useEffect(() => {
     getCurrentUser()
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [getCurrentUser]);
-
-  function onSignOut() {
-    logout()
-      .then(() => (window.location.href = "/login"))
       .catch(console.error);
-  }
+  }, [getCurrentUser]);
 
   return (
     <div>
