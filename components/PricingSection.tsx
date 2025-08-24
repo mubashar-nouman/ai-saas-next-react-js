@@ -63,7 +63,7 @@ const PricingSection = () => {
                         Choose the <span className="text-purple-600">Perfect Plan</span> for You
                     </h2>
                     <p className="text-base text-gray-600 max-w-2xl mx-auto">
-                        Flexible pricing to fit your needs, whether you're a solo creator or a growing team.
+                        Flexible pricing to fit your needs, whether you&apos;re a solo creator or a growing team.
                     </p>
                 </div>
 

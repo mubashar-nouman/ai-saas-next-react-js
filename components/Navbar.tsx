@@ -19,7 +19,7 @@ export default function Navbar() {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [getCurrentUser]);
 
   const handleNavigation = (href: string) => {
     setMobileOpen(false);
